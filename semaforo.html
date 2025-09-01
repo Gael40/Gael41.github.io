@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Semáforo con JS</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .semaforo {
+            width: 100px;
+            height: 100px;
+            margin: auto;
+            border-radius: 50%;
+            background-color: gray;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Colores del semáforo */
+        .rojo {
+            background-color: red;
+        }
+
+        .amarillo {
+            background-color: yellow;
+        }
+
+        .verde {
+            background-color: green;
+        }
+
+        #estado {
+            margin-top: 20px;
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+
+        button {
+            margin-top: 30px;
+            padding: 10px 20px;
+            font-size: 1em;
+            border: none;
+            border-radius: 8px;
+            background-color: #333;
+            color: white;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Semáforo Interactivo</h1>
+
+    <div id="luz" class="semaforo rojo"></div>
+    <p id="estado">Alto</p>
+
+    <button onclick="cambiar()">Siguiente</button>
+
+    <script>
+        let estados = ["rojo", "amarillo", "verde"];
+        let mensajes = ["Alto", "Precaución", "Avanza"];
+        let indice = 0;
+
+        function cambiar() {
+            indice = (indice + 1) % estados.length;
+
+            let luz = document.getElementById("luz");
+            luz.className = "semaforo " + estados[indice];
+
+            document.getElementById("estado").textContent = mensajes[indice];
+        }
+    </script>
+</body>
+
+</html>
