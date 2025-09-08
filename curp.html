@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>CURP Generator</title>
+    <style>
+        body {
+            font-family: Verdana, sans-serif;
+            background: #1e1e2f;
+            color: #fff;
+            display: flex;
+            height: 100vh;
+            align-items: center;
+            justify-content: center;
+        }
+
+        form {
+            background: #2b2b40;
+            padding: 20px;
+            border-radius: 12px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+            max-width: 950px;
+        }
+
+        h2 {
+            flex-basis: 100%;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        input,
+        select,
+        button {
+            padding: 8px;
+            border: none;
+            border-radius: 6px;
+        }
+
+        input,
+        select {
+            background: #fff;
+            color: #000;
+            width: 160px;
+        }
+
+        button {
+            background: #4cafef;
+            color: #fff;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+            width: 120px;
+        }
+
+        button:hover {
+            background: #2196f3;
+        }
+
+        #resultado {
+            flex-basis: 100%;
+            text-align: center;
+            margin-top: 15px;
+            font-weight: bold;
+            color: #4cafef;
+        }
+    </style>
+</head>
+
+<body>
+    <form id="curpForm">
+        <h2>Generar CURP</h2>
+        <input type="text" id="nombre" placeholder="Nombre" required>
+        <input type="text" id="apellidoP" placeholder="Apellido Paterno" required>
+        <input type="text" id="apellidoM" placeholder="Apellido Materno" required>
+        <input type="date" id="fechaNacimiento" required>
+        <select id="sexo" required>
+            <option value="">Sexo</option>
+            <option value="H">Hombre</option>
+            <option value="M">Mujer</option>
+        </select>
+        <select id="estado" required>
+            <option value="">Estado</option>
+            <option value="NL">Nuevo León</option>
+            <option value="DF">CDMX</option>
+            <option value="JC">Jalisco</option>
+            <option value="TS">Tamaulipas</option>
+            <option value="NE">Extranjero</option>
+        </select>
+        <button type="submit">Generar</button>
+        <div id="resultado"></div>
+    </form>
+
+    <script>
+        function primeraVocal(str) {
+            return (str.slice(1).match(/[AEIOU]/) || ["X"])[0];
+        }
+        function primeraConsonante(str) {
+            return (str.slice(1).match(/[^AEIOU]/) || ["X"])[0];
+        }
+        document.getElementById("curpForm").addEventListener("submit", e => {
+            e.preventDefault();
+            let nombre = document.getElementById("nombre").value.trim().toUpperCase(),
+                apP = document.getElementById("apellidoP").value.trim().toUpperCase(),
+                apM = document.getElementById("apellidoM").value.trim().toUpperCase(),
+                fecha = new Date(document.getElementById("fechaNacimiento").value),
+                año = fecha.getFullYear().toString().slice(-2),
+                mes = String(fecha.getMonth() + 1).padStart(2, "0"),
+                dia = String(fecha.getDate()).padStart(2, "0"),
+                sexo = document.getElementById("sexo").value,
+                estado = document.getElementById("estado").value;
+
+            let curp = apP[0] + primeraVocal(apP) + apM[0] + nombre[0] + año + mes + dia + sexo + estado +
+                primeraConsonante(apP) + primeraConsonante(apM) + primeraConsonante(nombre) + "00";
+
+            document.getElementById("resultado").textContent = "CURP: " + curp;
+        });
+    </script>
+</body>
+
+</html>
